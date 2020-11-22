@@ -10,24 +10,22 @@ log.critical("\n------------start------------\n")
 files=os.listdir('C:\\Users\\fujitsu\\Desktop\\Json')
 Jsons=list(filter(lambda x: x.endswith('.json'), files))
 Schemas=list(filter(lambda x: x.endswith('.schema'), files))
-print(Jsons)
-print(Schemas)
+#print(Jsons)
+#print(Schemas)
 
 
-JsonName='1eba2aa1-2acf-460d-91e6-55a8c3e3b7a3.json'
+JsonName='a95d845c-8d9e-4e07-8948-275167643a40.json'
 with open(JsonName) as file1:
     d = json.load(file1)
     data=d.keys()
-    p=d.get('data')
+    p=d.get('data') #dict
 
-    print(type(p))
 
 for Schema in Schemas:
     SchemaName=Schema
 
     with open(SchemaName) as schema1:
-        c = json.load(schema1)
-        print(type(c))
+        c = json.load(schema1) #dict
 
 
     try:
@@ -43,3 +41,6 @@ for Schema in Schemas:
         for error in errors:
             log.critical(error.message)
             print(error.message)
+            if error.message=="None is not of type 'object'":
+                log.critical('Возможно, ваш Json пуст')
+                print('Возможно, ваш Json пуст')
