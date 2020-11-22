@@ -13,6 +13,18 @@ Schemas=list(filter(lambda x: x.endswith('.schema'), files))
 #print(Jsons)
 #print(Schemas)
 
+#проверим, всем ли приписана схема
+for Json in Jsons:
+    with open(Json) as file1:
+        try:
+            d = json.load(file1)
+            data=d.keys()
+            p=d.get('event')
+            print(Json+' eventname = '+p)
+        except:
+            print(Json+':error')
+            continue
+#да, всем кроме двух пустых, и в одном ошибка
 
 JsonName='a95d845c-8d9e-4e07-8948-275167643a40.json'
 with open(JsonName) as file1:
