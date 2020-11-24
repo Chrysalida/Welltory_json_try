@@ -35,6 +35,12 @@ for Json in Jsons:
         try:
             data=d.keys()
             p=d.get('data') #dict
+            if p==None:
+                log.critical('\nРаздел "data" файла {} пуст\
+                                \n перехожу к следующему файлу \n'.format(JsonName))
+                print('Раздел "data" вашего Json пуст')
+                continue
+
         except:
             log.critical('\n Файл {}  - на самом деле не Json. Он пуст или не соотвутствует структуре Json. \n\
                             Перехожу к следующему файлу\n'.format(JsonName))
@@ -62,10 +68,13 @@ for Json in Jsons:
             for error in errors:
                 log.critical(error.message)
                 print(error.message)
-                if error.message=="None is not of type 'object'":
-                    log.critical('Раздел "data" вашего Json пуст')
-                    print('Раздел "data" вашего Json пуст')
 
-                    
+
+
 log.critical('\n Все файлы проверены')
 print('Все файлы проверены')
+
+
+
+
+
