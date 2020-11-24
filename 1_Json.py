@@ -13,46 +13,59 @@ Schemas=list(filter(lambda x: x.endswith('.schema'), files))
 #print(Jsons)
 #print(Schemas)
 
-#проверим, всем ли приписана схема
+###проверим, всем ли приписана схема
+##for Json in Jsons:
+##    with open(Json) as file1:
+##        try:
+##            d = json.load(file1)
+##            data=d.keys()
+##            p=d.get('event')
+##            print(Json+' eventname = '+p)
+##        except:
+##            print(Json+':error')
+##            continue
+###да, всем кроме двух пустых, и в одном ошибка
+
+
 for Json in Jsons:
-    with open(Json) as file1:
+
+    JsonName=Json
+    with open(JsonName) as file1:
+        d = json.load(file1)
         try:
-            d = json.load(file1)
             data=d.keys()
-            p=d.get('event')
-            print(Json+' eventname = '+p)
+            p=d.get('data') #dict
         except:
-            print(Json+':error')
+            log.critical('\n Файл {}  - на самом деле не Json. Он пуст или не соотвутствует структуре Json. \n\
+                            Перехожу к следующему файлу\n'.format(JsonName))
+            print('\n Файл {}  - на самом деле не Json. Перехожу к следующему файлу\n'.format(JsonName))
             continue
-#да, всем кроме двух пустых, и в одном ошибка
-
-JsonName='a95d845c-8d9e-4e07-8948-275167643a40.json'
-with open(JsonName) as file1:
-    d = json.load(file1)
-    data=d.keys()
-    p=d.get('data') #dict
 
 
-for Schema in Schemas:
-    SchemaName=Schema
+    for Schema in Schemas:
+        SchemaName=Schema
 
-    with open(SchemaName) as schema1:
-        c = json.load(schema1) #dict
+        with open(SchemaName) as schema1:
+            c = json.load(schema1) #dict
 
 
-    try:
-        log.critical('\n Trying to validate: \n SCHEMA = '+SchemaName+' \n JSON file= '+JsonName)
-        v=jsonschema.Draft7Validator(c)
-        errors=v.iter_errors(p)
-        jsonschema.validate(p,c)
-        log.critical("Result: success")
+        try:
+            log.critical('\n Trying to validate: \n SCHEMA = '+SchemaName+' \n JSON file= '+JsonName)
+            v=jsonschema.Draft7Validator(c)
+            errors=v.iter_errors(p)
+            jsonschema.validate(p,c)
+            log.critical("Result: SUCCESS!")
 
-    except:
-        log.critical("Result: failure!")
-        log.critical("Due to:")
-        for error in errors:
-            log.critical(error.message)
-            print(error.message)
-            if error.message=="None is not of type 'object'":
-                log.critical('Возможно, ваш Json пуст')
-                print('Возможно, ваш Json пуст')
+        except:
+            log.critical("Result: failure!")
+            log.critical("Due to:")
+            for error in errors:
+                log.critical(error.message)
+                print(error.message)
+                if error.message=="None is not of type 'object'":
+                    log.critical('Раздел "data" вашего Json пуст')
+                    print('Раздел "data" вашего Json пуст')
+
+                    
+log.critical('\n Все файлы проверены')
+print('Все файлы проверены')
