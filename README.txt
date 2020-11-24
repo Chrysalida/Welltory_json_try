@@ -1,39 +1,26 @@
 ------------start------------
+ 
+ Файл 29f0bfa7-bd51-4d45-93be-f6ead1ae0b96.json  - на самом деле не Json. Он пуст или не соотвутствует структуре Json. 
+                            Перехожу к следующему файлу
 
- 
  Trying to validate: 
- SCHEMA = cmarker_created.schema 
- JSON file= 1eba2aa1-2acf-460d-91e6-55a8c3e3b7a3.json
- Result: failure!
- Due to:
- 'cmarkers' is a required property
- 'datetime' is a required property
- 'user_id' is a required property
- 
- Trying to validate: 
- SCHEMA = label_selected.schema 
- JSON file= 1eba2aa1-2acf-460d-91e6-55a8c3e3b7a3.json
- Result: failure!
- Due to:
- 'unique_id' is a required property
- 'user' is a required property
- 'user_id' is a required property
- 
- ------------start------------
-
- 
- Trying to validate: 
- SCHEMA = cmarker_created.schema 
- JSON file= a95d845c-8d9e-4e07-8948-275167643a40.json
+ SCHEMA = workout_created.schema 
+ JSON file= cc07e442-7986-4714-8fc2-ac2256690a90.json
  Result: failure!
  Due to:
  None is not of type 'object'
- Возможно, ваш Json пуст
+ Раздел "data" вашего Json пуст
  
  Trying to validate: 
- SCHEMA = label_selected.schema 
- JSON file= a95d845c-8d9e-4e07-8948-275167643a40.json
+ SCHEMA = cmarker_created.schema 
+ JSON file= e2d760c3-7e10-4464-ab22-7fda6b5e2562.json
  Result: failure!
  Due to:
- None is not of type 'object'
- Возможно, ваш Json пуст
+ 'bad user id' is not of type 'integer'
+ 
+ Trying to validate: 
+ SCHEMA = sleep_created.schema 
+ JSON file= f5656ff6-29e1-46b0-8d8a-ff77f9cc0953.json
+ Result: SUCCESS!
+ 
+ 
