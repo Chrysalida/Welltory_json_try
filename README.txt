@@ -3,13 +3,8 @@
  Файл 29f0bfa7-bd51-4d45-93be-f6ead1ae0b96.json  - на самом деле не Json. Он пуст или не соотвутствует структуре Json. 
                             Перехожу к следующему файлу
 
- Trying to validate: 
- SCHEMA = workout_created.schema 
- JSON file= cc07e442-7986-4714-8fc2-ac2256690a90.json
- Result: failure!
- Due to:
- None is not of type 'object'
- Раздел "data" вашего Json пуст
+ Раздел "data" файла a95d845c-8d9e-4e07-8948-275167643a40.json пуст                                
+ перехожу к следующему файлу 
  
  Trying to validate: 
  SCHEMA = cmarker_created.schema 
