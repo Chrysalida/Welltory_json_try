@@ -68,13 +68,12 @@ for Json in Jsons:
             for error in errors:
                 log.critical(error.message)
                 print(error.message)
+                if error.message[-22::]=='is a required property':
+                    req_prop=len(error.message)-23
+                    log.critical('В файле json не хватает обязательной части: {}'.format(error.message[0:req_prop]))
+                    print('В файле json не хватает обязательной части: {}'.format(error.message[0:req_prop]))
 
 
 
 log.critical('\n Все файлы проверены')
 print('Все файлы проверены')
-
-
-
-
-
