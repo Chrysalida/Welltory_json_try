@@ -11,7 +11,7 @@
  JSON file= e2d760c3-7e10-4464-ab22-7fda6b5e2562.json
  Result: failure!
  Due to:
- 'bad user id' is not of type 'integer'
+ Неправильный тип данных у 'bad user id'. Требуемый тип данных: 'integer'
  
  Trying to validate: 
  SCHEMA = sleep_created.schema 
