@@ -20,6 +20,9 @@ Schemas=list(filter(lambda x: x.endswith('.schema'), files))
 ##            print(Json+':error')
 ##            continue
 ###да, всем кроме двух пустых, и в одном ошибка
+###но проверять все равно будем все
+
+
 
 def validating(Jsons,Schemas):
     """
@@ -30,10 +33,11 @@ def validating(Jsons,Schemas):
     prints human-readable commentary on each error into the Readme.txt
     otherwise declares success
     reports when all files are checked
+    requires jsonschema lib
 
     """
 
-    notoftype=' is not of type ' #one of errors to handle
+
 
     log.basicConfig(filename='README.txt',level=50, format=' %(message)s')
     log.critical("\n------------start------------\n")
@@ -65,7 +69,6 @@ def validating(Jsons,Schemas):
             with open(SchemaName) as schema1:
                 c = json.load(schema1) #dict
 
-
             try:
                 log.critical('\n Trying to validate: \n SCHEMA = '+SchemaName+' \n JSON file= '+JsonName)
                 v=jsonschema.Draft7Validator(c)
@@ -77,25 +80,44 @@ def validating(Jsons,Schemas):
                 log.critical("Result: failure!")
                 log.critical("Due to:")
                 for error in errors:
-                    a=error.message.find(notoftype,0)
-                    if not a==-1:#if this error is not-of-type error:
-                        property=error.message[0:a]#what property is of the wrong type?
-                        tp=len(notoftype)+a#where in the error message the type is determined?
-                        data_type=error.message[tp::]#and finally, what the type it should be?
-                        log.critical('Неправильный тип данных у {0}. Требуемый тип данных: {1}'.format(property,data_type))
-                        print('Неправильный тип данных у {0}. Требуемый тип данных: {1}'.format(property,data_type))
-
-
-                    elif error.message[-22::]=='is a required property':
-                        req_prop=len(error.message)-23
-                        log.critical('В файле json не хватает обязательной части: {}'.format(error.message[0:req_prop]))
-                        print('В файле json не хватает обязательной части: {}'.format(error.message[0:req_prop]))
-                    else:
-                        log.critical(error.message)
-                        print(error.message)
+                    err_mess=error.message
+                    error_interpret(err_mess)
 
 
     log.critical('\n Все файлы проверены')
     print('Все файлы проверены')
+
+
+
+
+def error_interpret(error_message):
+    """
+    Makes human-readable report on each validation error
+
+    takes error.message as an input
+    check error.message against different error criteria
+    (e.g. required property absent, data of the wrong type etc)
+    error.message comes from iter_errors (jsonschema.Draft7Validator lib)
+
+    """
+
+    notoftype=' is not of type '
+    a=error_message.find(notoftype,0)
+    if not a==-1:#if this error is not-of-type error:
+        prop=error_message[0:a]#what property is of the wrong type?
+        tp=len(notoftype)+a#where in the error message the type is determined?
+        data_type=error_message[tp::]#and finally, what the type it should be?
+        log.critical('Неправильный тип данных у {0}. Требуемый тип данных: {1}'.format(prop,data_type))
+        print('Неправильный тип данных у {0}. Требуемый тип данных: {1}'.format(prop,data_type))
+
+    elif error_message[-22::]=='is a required property':
+        req_prop=len(error_message)-23
+        log.critical('В файле json не хватает обязательной части: {}'.format(error_message[0:req_prop]))
+        print('В файле json не хватает обязательной части: {}'.format(error_message[0:req_prop]))
+    else:
+        log.critical(error_message)
+        print(error_message)
+
+
 
 validating(Jsons,Schemas)
