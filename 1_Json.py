@@ -4,7 +4,7 @@ from jsonschema import validate
 import logging as log
 import os
 
-files=os.listdir('C:\\Users\\fujitsu\\Desktop\\Json')#путь к общей папке с джейсонами и схемами
+files=os.listdir('C:\\Users\\fujitsu\\Desktop\\Json')
 Jsons=list(filter(lambda x: x.endswith('.json'), files))
 Schemas=list(filter(lambda x: x.endswith('.schema'), files))
 
@@ -38,6 +38,7 @@ def validating(Jsons,Schemas):
     """
 
 
+
     log.basicConfig(filename='README.txt',level=50, format=' %(message)s')
     log.critical("\n------------start------------\n")
 
@@ -50,8 +51,9 @@ def validating(Jsons,Schemas):
                 data=d.keys()
                 p=d.get('data') #dict
                 if p==None:
-                    log.critical('\nРаздел "data" файла {} пуст\
-                                    \n перехожу к следующему файлу \n'.format(JsonName))
+                    log.critical('\nРаздел "data" файла {} пуст,\
+                                    \nэто значит, что смысловая часть данных отсуствует.\
+                                    \nПерехожу к следующему файлу \n'.format(JsonName))
                     print('Раздел "data" вашего Json пуст')
                     continue
 
@@ -95,8 +97,8 @@ def error_interpret(error_message):
 
     takes error.message as an input
     check error.message against different error criteria
-    (required property absence, data of the wrong type)
-    error.message comes from iter_errors (jsonschema.Draft7Validator, jsonschema lib)
+    (e.g. required property absent, data of the wrong type etc)
+    error.message comes from iter_errors (jsonschema.Draft7Validator lib)
 
     """
 
@@ -106,12 +108,12 @@ def error_interpret(error_message):
         prop=error_message[0:a]#what property is of the wrong type?
         tp=len(notoftype)+a#where in the error message the type is determined?
         data_type=error_message[tp::]#and finally, what the type it should be?
-        log.critical('Неправильный тип данных у {0}. Требуемый тип данных: {1}'.format(prop,data_type))
+        log.critical('Неправильный тип данных у {0}. Замените на данные типа {1}'.format(prop,data_type))
         print('Неправильный тип данных у {0}. Требуемый тип данных: {1}'.format(prop,data_type))
 
     elif error_message[-22::]=='is a required property':
         req_prop=len(error_message)-23
-        log.critical('В файле json не хватает обязательной части: {}'.format(error_message[0:req_prop]))
+        log.critical('В файле json не хватает обязательной части: {}, добавьте ее.'.format(error_message[0:req_prop]))
         print('В файле json не хватает обязательной части: {}'.format(error_message[0:req_prop]))
     else:
         log.critical(error_message)
