@@ -4,7 +4,7 @@ from jsonschema import validate
 import logging as log
 import os
 
-files=os.listdir('C:\\Users\\fujitsu\\Desktop\\Json')
+files=os.listdir('C:\\Users\\fujitsu\\Desktop\\Json')#путь к общей папке с джейсонами и схемами
 Jsons=list(filter(lambda x: x.endswith('.json'), files))
 Schemas=list(filter(lambda x: x.endswith('.schema'), files))
 
