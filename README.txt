@@ -18,4 +18,9 @@
  JSON file= f5656ff6-29e1-46b0-8d8a-ff77f9cc0953.json
  Result: SUCCESS!
  
- 
+ Trying to validate: 
+ SCHEMA = cmarker_created.schema 
+ JSON file= fb1a0854-9535-404d-9bdd-9ec0abb6cd6c.json
+ Result: failure!
+ Due to:
+ В файле json не хватает обязательной части: 'cmarkers'
