@@ -4,7 +4,7 @@ from jsonschema import validate
 import logging as log
 import os
 
-files=os.listdir('C:\\Users\\fujitsu\\Desktop\\Json')
+files=os.listdir('C:\\Users\\fujitsu\\Desktop\\Json')#папка с джейсонами и схемами, output кладем туда же
 Jsons=list(filter(lambda x: x.endswith('.json'), files))
 Schemas=list(filter(lambda x: x.endswith('.schema'), files))
 
@@ -36,8 +36,7 @@ def validating(Jsons,Schemas):
     requires jsonschema lib
 
     """
-
-
+    
 
     log.basicConfig(filename='README.txt',level=50, format=' %(message)s')
     log.critical("\n------------start------------\n")
