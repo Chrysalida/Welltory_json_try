@@ -4,6 +4,8 @@ from jsonschema import validate
 import logging as log
 import os
 
+notoftype=' is not of type ' #error text to handle
+
 log.basicConfig(filename='README.txt',level=50, format=' %(message)s')
 log.critical("\n------------start------------\n")
 
@@ -66,14 +68,26 @@ for Json in Jsons:
             log.critical("Result: failure!")
             log.critical("Due to:")
             for error in errors:
-                log.critical(error.message)
-                print(error.message)
-                if error.message[-22::]=='is a required property':
+                a=error.message.find(notoftype,0)
+                if not a==-1:#if this error is not-of-type error:
+                    property=error.message[0:a]#what property is of the wrong type?
+                    tp=len(notoftype)+a#where in the error message the type is determined?
+                    data_type=error.message[tp::]#and finally, what the type it should be?
+                    log.critical('Неправильный тип данных у {0}. Требуемый тип данных: {1}'.format(property,data_type))
+                    print('Неправильный тип данных у {0}. Требуемый тип данных: {1}'.format(property,data_type))
+
+
+                elif error.message[-22::]=='is a required property':
                     req_prop=len(error.message)-23
                     log.critical('В файле json не хватает обязательной части: {}'.format(error.message[0:req_prop]))
                     print('В файле json не хватает обязательной части: {}'.format(error.message[0:req_prop]))
+                else:
+                    log.critical(error.message)
+                    print(error.message)
 
 
 
 log.critical('\n Все файлы проверены')
 print('Все файлы проверены')
+
+
