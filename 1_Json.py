@@ -38,7 +38,6 @@ def validating(Jsons,Schemas):
     """
 
 
-
     log.basicConfig(filename='README.txt',level=50, format=' %(message)s')
     log.critical("\n------------start------------\n")
 
@@ -96,8 +95,8 @@ def error_interpret(error_message):
 
     takes error.message as an input
     check error.message against different error criteria
-    (e.g. required property absent, data of the wrong type etc)
-    error.message comes from iter_errors (jsonschema.Draft7Validator lib)
+    (required property absence, data of the wrong type)
+    error.message comes from iter_errors (jsonschema.Draft7Validator, jsonschema lib)
 
     """
 
